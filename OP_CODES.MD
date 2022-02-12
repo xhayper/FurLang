@@ -30,5 +30,25 @@ MODULO ~blep~ Same as ADD but this time it's modulo
 SET ~blep~ Set the POINTER_TYPE[POINTER_OFFSET] to STACK[0]
 SETALL ~blep~ Set the POINTER_TYPE[POINTER_OFFSET] to STACK
 
+IF_FALSE N ~blep~ if STACK[0] is false, jump to offset N
+IF_TRUE N ~blep~ Same as IF_FALSE but instead of FALSE, it's TRUE
+
+IF_FALSE_RET ~blep~ Same as IF_FALSE but instead of jumping to offset N, It return instead
+IF_TRUE_RET ~blep~ Same as IF_TRUE_RET but instead of FALSE, it's TRUE
+
 RET ~blep~ Return the value in the STACK
+```
+
+## Sample
+
+### FurLang
+
+```
+
+```
+
+### FL
+
+```
+
 ```
