@@ -1,6 +1,6 @@
 # Folder
-test/test
+.vscode/
 
 # File
-test/test.asm
-test/test.o
+output.asm
+output.o

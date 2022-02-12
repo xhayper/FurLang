@@ -2,6 +2,9 @@
 
 # Porth <3 you
 
+import subprocess
+import sys
+
 iota_counter = 0
 def iota(reset=False):
     global iota_counter
@@ -73,8 +76,8 @@ def parseLineToOp(keyword):
         raise SyntaxError("Invalid Syntax")
     return []
 
-def loadProgram():
-    program = open("test/index.fl", "r")
+def loadProgram(path):
+    program = open(path, "r")
     instruction = []
     for word in program.read().split('\n'):
         instruction = [*instruction, *parseLineToOp(word.split())]
@@ -82,7 +85,7 @@ def loadProgram():
 
 
 def compile(program):
-    asm = open("test/test.asm", "w")
+    asm = open("output.asm", "w")
     asm.write("BITS 64\n")
     asm.write("segment .text\n")
     asm.write("print:\n")
@@ -146,5 +149,10 @@ def compile(program):
     asm.write("    mov rax, 60\n")
     asm.write("    mov rdi, 0\n")
     asm.write("    syscall\n")
-            
-compile(loadProgram())
+
+if __name__ == "__main__":
+    compile(loadProgram(sys.argv[1]))
+    subprocess.call(["nasm", "-felf64", "output.asm"])
+    subprocess.call(["ld", "-o", "output", "output.o"])
+    subprocess.call(["./output"])
+    
