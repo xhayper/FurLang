@@ -56,7 +56,7 @@ RET_ALL ~blep~ Reutrn all of the stack as the value
 ~blep~ Entry point
 int hewwo[] {
   You = "Cutie"
-  if [ You != "Cutie" ] return
+  if [ You != "Cutie" ] bark 1
   bark 0
 }
 ```
