@@ -40,7 +40,7 @@ IF_TRUE N ~blep~ Same as IF_FALSE but instead of FALSE, it's TRUE
 EQU ~blep~ If STACK[0] is equal to STACK[1] then set RESULT[0] to 1, else set RESULT[0] to 0
 
 RET ~blep~ Return the value in the STACK[0]
-RET_ALL ~blep~ Reutrn all of the stack as the value
+RET_ALL ~blep~ Return all of the stack as the value
 ```
 
 ## Sample
