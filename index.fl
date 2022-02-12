@@ -3,6 +3,6 @@ add 3 to 3
 ~blep~ Print it out
 print
 ~blep~ Check if the value is 543
-is 543
+== 543
 ~blep~ Print the result
 print

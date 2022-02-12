@@ -75,7 +75,7 @@ def parseLineToOp(keyword):
         if keyword[0] == "print":
             return [PRINT()]
     elif len(keyword) == 2:
-        if keyword[0] != "is":
+        if keyword[0] != "==":
             raise SyntaxError("Invalid Syntax")
         a = int(keyword[1])
         return [PUSH(a), EQU()]
