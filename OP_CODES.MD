@@ -6,7 +6,8 @@ This page will describe the OP_CODE that FurLang will use, It's very simillar to
 
 ```
 ~blep~ ALL NUMBER START AT 0
-~blep~ ARGS, VAR, FUNCTION have different offset
+~blep~ ARGS, VAR, FUNCTION and RESULT have different offset
+~blep~ ARGS = ARR[256], VAR = ARR[256], FUNCTION = [256], RESULT = [256]
 
 LD_ARGS N ~blep~ Load args number N from the function
 LD_VAR N ~belp~ Load variable at offset N, This mean you can have duplicate variable name if you use raw OP_CODE
