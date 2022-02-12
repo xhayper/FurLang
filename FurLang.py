@@ -69,7 +69,7 @@ SYNTAX_COMMENT = ["~blep~"]
 SYNTAX_MATH = ["add", "remove"]
 
 def parseLineToOp(keyword):
-    if keyword[0] == "~blep~":
+    if len(keyword) == 0 or keyword[0] == "~blep~":
         return []
     if len(keyword) == 1:
         if keyword[0] == "awoo":
