@@ -72,7 +72,7 @@ def parseLineToOp(keyword):
     if keyword[0] == "~blep~":
         return []
     if len(keyword) == 1:
-        if keyword[0] == "print":
+        if keyword[0] == "awoo":
             return [PRINT()]
     elif len(keyword) == 2:
         if keyword[0] != "==":
