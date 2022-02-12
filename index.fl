@@ -1,8 +1,8 @@
 ~blep~ Add 3 to 3
 add 3 to 3
 ~blep~ Print it out
-print
+awoo
 ~blep~ Check if the value is 543
 == 543
 ~blep~ Print the result
-print
+awoo
