@@ -59,19 +59,23 @@ def run(program):
         elif op[0] == OP_DUMP:
             print(stack)
 
-k = ["add", "remove"]
+SYNTAX_COMMENT = ["~blep~"]
+SYNTAX_MATH = ["add", "remove"]
 
 def parseLineToOp(keyword):
     if len(keyword) == 1:
         if keyword[0] == "dump":
             return [DUMP()]
     elif len(keyword) == 4:
-        if not keyword[0] in k or (keyword[0] == "add" and keyword[2] != "to") or (keyword[0] == "remove" and keyword[2] != "from"):
+        if not keyword[0] in SYNTAX_MATH or (keyword[0] == "add" and keyword[2] != "to") or (keyword[0] == "remove" and keyword[2] != "from"):
             raise SyntaxError("Invalid Syntax")
         
         a = int(keyword[1])
         b = int(keyword[3])
         return [PUSH(a), PUSH(b), keyword[0] == "add" and ADD() or SUB()]
+
+    if keyword[0] in SYNTAX_COMMENT:
+        return []
     else:
         raise SyntaxError("Invalid Syntax")
     return []
