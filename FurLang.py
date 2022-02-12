@@ -63,7 +63,7 @@ def run(program):
             b = stack.pop()
             stack.append(int(a == b))
         elif op[0] == OP_PRINT:
-            print(stack)
+            print(stack[0])
 
 SYNTAX_COMMENT = ["~blep~"]
 SYNTAX_MATH = ["add", "remove"]
@@ -173,6 +173,7 @@ def compile(program):
     asm.write("    syscall\n")
 
 if __name__ == "__main__":
+    print("Expected: ", end="")
     run(loadProgram(sys.argv[1]))
     compile(loadProgram(sys.argv[1]))
     subprocess.call(["nasm", "-felf64", "output.asm"])
