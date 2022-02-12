@@ -10,7 +10,7 @@ if [ You == "Cute" ] then { ~blep~ then is optional
   bark "UwU" ~blep~ Return "UwU"
 }
 
-int hewwo {
+int hewwo[] {
   bark 0
 }
 
