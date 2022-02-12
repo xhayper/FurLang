@@ -173,8 +173,9 @@ def compile(program):
     asm.write("    syscall\n")
 
 if __name__ == "__main__":
-    print("Expected: ", end="")
+    print("-- SIMULATION --")
     run(loadProgram(sys.argv[1]))
+    print("-- REALITY --")
     compile(loadProgram(sys.argv[1]))
     subprocess.call(["nasm", "-felf64", "output.asm"])
     subprocess.call(["ld", "-o", "output", "output.o"])
