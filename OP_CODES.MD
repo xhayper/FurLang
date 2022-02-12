@@ -14,4 +14,5 @@ LD_VAR N ~belp~ Load variable at offset N, This mean you can have duplicate vari
 LD_RESULT N ~blep~ Load the result of a function at N offset (if function return more than 1 value)
 
 CALL N ~blep~ Load function from offset N, It will store the value in RESULT stack, Clearing previous RESULT stack
+CLEAR N ~blep~ Clear the stack by type, 1 - ARGS, 2 - VAR, 3 - FUNCTION and 4 - RESULT
 ```
