@@ -1,6 +1,6 @@
 # FurLang
 
-# Current Design Plan
+## Current Design Plan
 
 ```
 ~blep~ One line comment
@@ -15,3 +15,6 @@ int hewwo[] {
 }
 
 ```
+
+## Credits
+[Porth](https://www.youtube.com/watch?v=8QP2fDBIxjM&list=PLpM-Dvs8t0VbMZA7wW9aR3EtBqe2kinu4&index=1) - This really help me, Thank you so much.

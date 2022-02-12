@@ -13,31 +13,35 @@ def iota(reset=False):
     iota_counter += 1
     return iota_counter
 
+# Stack
 OP_PUSH = iota()
 OP_POP = iota()
-OP_SET = iota()
+# Math
 OP_ADD = iota()
 OP_SUB = iota()
-OP_DUMP = iota()
+# Condition
+OP_EQU = iota()
+# Debug
+OP_PRINT = iota()
 OP_COUNT = iota()
 
-def PUSH(rd):
-    return (OP_PUSH, rd)
+def PUSH(a):
+    return (OP_PUSH, a)
 
-def POP(rd):
-    return (OP_POP, rd)
-
-def SET(rd, rs):
-    return (OP_SET, rd, rs)
+def POP(a):
+    return (OP_POP, a)
 
 def ADD():
-    return (OP_ADD, )
+    return (OP_ADD,)
 
 def SUB():
-    return (OP_SUB, )
+    return (OP_SUB,)
     
-def DUMP():
-    return (OP_DUMP, )
+def PRINT():
+    return (OP_PRINT,)
+
+def EQU():
+    return (OP_EQU,)
 
 def run(program):
     stack = []
@@ -46,8 +50,6 @@ def run(program):
             stack.append(op[1])
         elif op[0] == OP_POP:
             stack.pop()
-        elif op[0] == OP_SET:
-            stack[op[1]] = op[2]
         elif op[0] == OP_ADD:
             a = stack.pop()
             b = stack.pop()
@@ -56,26 +58,33 @@ def run(program):
             a = stack.pop()
             b = stack.pop()
             stack.append(b - a)
-        elif op[0] == OP_DUMP:
+        elif op[0] == OP_EQU:
+            a = stack.pop()
+            b = stack.pop()
+            stack.append(int(a == b))
+        elif op[0] == OP_PRINT:
             print(stack)
 
 SYNTAX_COMMENT = ["~blep~"]
 SYNTAX_MATH = ["add", "remove"]
 
 def parseLineToOp(keyword):
+    if keyword[0] == "~blep~":
+        return []
     if len(keyword) == 1:
-        if keyword[0] == "dump":
-            return [DUMP()]
+        if keyword[0] == "print":
+            return [PRINT()]
+    elif len(keyword) == 2:
+        if keyword[0] != "is":
+            raise SyntaxError("Invalid Syntax")
+        a = int(keyword[1])
+        return [PUSH(a), EQU()]
     elif len(keyword) == 4:
         if not keyword[0] in SYNTAX_MATH or (keyword[0] == "add" and keyword[2] != "to") or (keyword[0] == "remove" and keyword[2] != "from"):
             raise SyntaxError("Invalid Syntax")
-        
         a = int(keyword[1])
         b = int(keyword[3])
         return [PUSH(a), PUSH(b), keyword[0] == "add" and ADD() or SUB()]
-
-    if keyword[0] in SYNTAX_COMMENT:
-        return []
     else:
         raise SyntaxError("Invalid Syntax")
     return []
@@ -143,10 +152,19 @@ def compile(program):
             asm.write("    pop rbx\n")
             asm.write("    sub rbx, rax\n")
             asm.write("    push rbx\n")
-        elif op[0] == OP_DUMP:
-            asm.write("    ;; -- dump --\n")
+        elif op[0] == OP_PRINT:
+            asm.write("    ;; -- print --\n")
             asm.write("    pop rdi\n")
             asm.write("    call print\n")
+        elif op[0] == OP_EQU:
+            asm.write("    ;; -- equal -- \n")
+            asm.write("    mov rcx, 0\n")
+            asm.write("    mov rdx, 1\n")
+            asm.write("    pop rax\n")
+            asm.write("    pop rbx\n")
+            asm.write("    cmp rax, rbx\n")
+            asm.write("    cmove rcx, rdx\n")
+            asm.write("    push rcx\n")
         else:
             assert False, "unreachable"
     asm.write("    ;; -- end --\n")
@@ -155,6 +173,7 @@ def compile(program):
     asm.write("    syscall\n")
 
 if __name__ == "__main__":
+    run(loadProgram(sys.argv[1]))
     compile(loadProgram(sys.argv[1]))
     subprocess.call(["nasm", "-felf64", "output.asm"])
     subprocess.call(["ld", "-o", "output", "output.o"])
