@@ -3,7 +3,7 @@ from Utility import Logger
 import re
 
 BOOL = ["true", "false"]
-RESET_WORD = [" ", "\n", "\0"]
+RESET_WORD = ["\n", "\0"]
 SKIP = [*RESET_WORD, "\t"]
 COMMENT = ["~owo~", "~uwu~", "~blep~"]
 
@@ -34,15 +34,24 @@ class Lexer:
         # Comment
         in_single_line_comment = False
         in_multi_line_comment = False
+        # String
+        string_open = False
         while 1:
             if index >= len(self.source): # End of file
                 break
 
             while not self.source[index] in RESET_WORD:
-                word += self.source[index]
+                char = self.source[index]
+                if char == "\"" and self.source[index-1] != "\\":
+                    string_open = not string_open
+                if char == " " and not string_open:
+                    break
+                word += char
                 index += 1
                 offset += 1
                 if index >= len(self.source): # End of file
+                    if string_open:
+                        Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected a closing '\"'" % (word.replace("\"", ""), line, offset), True)
                     break
 
             if word == "~owo~":
@@ -57,9 +66,15 @@ class Lexer:
                 else:
                     in_multi_line_comment = False
 
-            if not word in COMMENT and word != "" and not in_single_line_comment and not in_multi_line_comment:   
+            if not word in COMMENT and word != "" and not in_single_line_comment and not in_multi_line_comment:
                 if not re.findall("\D", word):
                     tokenList.append(Token(Constant.INT, int(word), line+1, offset-len(word), word))
+                elif word.startswith("\"") and not string_open:
+                    word = list(word)
+                    word[len(word)-1] = ""
+                    word[0] = ""
+                    word = ("".join(word)).replace("\\", "")
+                    tokenList.append(Token(Constant.STRING, word, line+1, offset-len(word), word))
                 elif word in BOOL:
                     tokenList.append(Token(Constant.BOOL, word == "true", line+1, offset-len(word), word))
                 else:
@@ -70,11 +85,14 @@ class Lexer:
                         Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected an keyword!" % (word, line+1, offset-len(word)), True)
 
             if len(self.source) > index and self.source[index] == "\n":
+                if string_open:
+                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected a closing '\"'" % (word.replace("\"", ""), line, offset), True)
                 line += 1
                 offset = 0
                 in_single_line_comment = False
 
-            word = ""
+            if not string_open:
+                word = ""
             index += 1
             offset += 1
         return tokenList

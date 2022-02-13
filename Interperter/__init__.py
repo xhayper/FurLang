@@ -26,8 +26,8 @@ class Interperter:
             token = self.advance()
             if token.tokenType == Keyword.AWOO:
                 content = self.advance()
-                if content == None or not (content.tokenType in [Constant.BOOL, Constant.INT, Constant.VARIABLE]):
-                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected an \"int\", \"bool\" or Variable after \"awoo\" keyword" % (token.originalWord, token.line, token.offset), True)
+                if content == None or not (content.tokenType in [Constant.BOOL, Constant.INT, Constant.VARIABLE, Constant.STRING]):
+                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected an \"int\", \"bool\", \"string\" or Variable after \"awoo\" keyword" % (token.originalWord, token.line, token.offset), True)
                 else:
                     out = ""
                     if content.tokenType == Constant.VARIABLE:
@@ -43,6 +43,6 @@ class Interperter:
                 if variable == None or not variable.tokenType == Constant.VARIABLE:
                     Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected a variable name after \"set\" keyword" % (token.originalWord, token.line, token.offset), True)
                 data = self.advance()
-                if data == None or not (data.tokenType in [Constant.BOOL, Constant.INT]):
-                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected an \"int\" or \"bool\" after the variable name" % (token.originalWord, token.line, token.offset), True)
+                if data == None or not (data.tokenType in [Constant.BOOL, Constant.INT, Constant.STRING]):
+                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected an \"int\", \"bool\" or \"string\" after the variable name" % (token.originalWord, token.line, token.offset), True)
                 variables[variable.value] = data.value

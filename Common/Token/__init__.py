@@ -21,6 +21,7 @@ class Operator(object):
 class Constant(object):
     INT = iota()
     BOOL = iota()
+    STRING = iota()
     VARIABLE = iota()
 
 class Token:
