@@ -24,10 +24,17 @@ class Constant(object):
 class Token:
     tokenType = ""
     value = ""
+    # Analysis
+    line = 0
+    offset = 0
+    originalWord = ""
 
-    def __init__(self, tokenType, value):
+    def __init__(self, tokenType, value, line, offset, originalWord):
         self.tokenType = tokenType
         self.value = value
+        self.line = line
+        self.offset = offset
+        self.originalWord = originalWord
     
     def __repr__(self):
-        return "< TOKEN: %s, VALUE: %s >" % (self.tokenType, self.value)
+        return "< TOKEN: %s, VALUE: %s, LINE: %s, OFFSET: %s, ORIGINAL_WORD: %s >" % (self.tokenType, self.value, self.line, self.offset, self.originalWord)
