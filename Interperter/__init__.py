@@ -21,12 +21,28 @@ class Interperter:
         return len(self.tokenList) > self.index+1
 
     def run(self):
+        variables = {}
         while self.haveNext():
             token = self.advance()
             if token.tokenType == Keyword.AWOO:
                 content = self.advance()
-                if content == None or not (content.tokenType in [Constant.BOOL, Constant.INT]):
-                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected an \"int\" or \"bool\" after \"awoo\" keyword" % (token.originalWord, token.line, token.offset), True)
+                if content == None or not (content.tokenType in [Constant.BOOL, Constant.INT, Constant.VARIABLE]):
+                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected an \"int\", \"bool\" or Variable after \"awoo\" keyword" % (token.originalWord, token.line, token.offset), True)
                 else:
-                    print(content.value)
-            
+                    out = ""
+                    if content.tokenType == Constant.VARIABLE:
+                        if content.value in variables:
+                            out = variables[content.value]
+                        else:
+                            Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Variable \"%s\" is not defined" % (token.originalWord, token.line, token.offset, content.value), True)
+                    else:
+                        out = content.value
+                    print(out)
+            elif token.tokenType == Keyword.SET:
+                variable = self.advance()
+                if variable == None or not variable.tokenType == Constant.VARIABLE:
+                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected a variable name after \"set\" keyword" % (token.originalWord, token.line, token.offset), True)
+                data = self.advance()
+                if data == None or not (data.tokenType in [Constant.BOOL, Constant.INT]):
+                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected an \"int\" or \"bool\" after the variable name" % (token.originalWord, token.line, token.offset), True)
+                variables[variable.value] = data.value

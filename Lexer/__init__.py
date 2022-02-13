@@ -16,6 +16,11 @@ class Lexer:
         tokenValue = None
         if word == "awoo":
             tokenType = Keyword.AWOO
+        elif word == "set":
+            tokenType = Keyword.SET
+        else:
+            tokenType = Constant.VARIABLE
+            tokenValue = word
         return (tokenType, tokenValue)
     
     def make_tokens(self):
@@ -52,11 +57,11 @@ class Lexer:
                 else:
                     in_multi_line_comment = False
 
-            if not word in COMMENT and not in_single_line_comment and not in_multi_line_comment:   
+            if not word in COMMENT and word != "" and not in_single_line_comment and not in_multi_line_comment:   
                 if not re.findall("\D", word):
                     tokenList.append(Token(Constant.INT, int(word), line+1, offset-len(word), word))
                 elif word in BOOL:
-                    tokenList.append(Token(Constant.BOOL, word == "true"))
+                    tokenList.append(Token(Constant.BOOL, word == "true", line+1, offset-len(word), word))
                 else:
                     tokenType, tokenValue = self.parseInstruction(word)
                     if tokenType:

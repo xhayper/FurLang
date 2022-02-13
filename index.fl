@@ -10,3 +10,11 @@ awoo 1
 awoo 12345
 ~uwu~
 ~blep~ Should not print "12345"
+
+~blep~ Variable test
+set a 52
+awoo a
+~blep~ Should print 52
+set a 1240
+awoo a
+~blep~ Should print 1240

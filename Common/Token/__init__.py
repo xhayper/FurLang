@@ -10,6 +10,7 @@ class Keyword(object):
     ELSEIF = iota()
     AWOO = iota() # Basiclly, Print
     BARK = iota() # Basiclly, Return
+    SET = iota()
 
 class Operator(object):
     ADD = iota()
@@ -20,6 +21,7 @@ class Operator(object):
 class Constant(object):
     INT = iota()
     BOOL = iota()
+    VARIABLE = iota()
 
 class Token:
     tokenType = ""
