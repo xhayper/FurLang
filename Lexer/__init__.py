@@ -51,7 +51,7 @@ class Lexer:
                 offset += 1
                 if index >= len(self.source): # End of file
                     if string_open:
-                        Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected a closing '\"'" % (word.replace("\"", ""), line, offset), True)
+                        Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   '%s' at lwine %s and cwolumn %s\n   Expected a closing '\"'" % (word.replace("\"", ""), line, offset), True)
                     break
 
             if word == "~owo~":
@@ -62,14 +62,14 @@ class Lexer:
 
             if word == "~uwu~":
                 if not in_multi_line_comment:
-                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected open comment block" % (word, line+1, offset-len(word)), True)
+                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   '%s' at lwine %s and cwolumn %s\n   Expected open comment block" % (word, line+1, offset-len(word)), True)
                 else:
                     in_multi_line_comment = False
 
             if not word in COMMENT and word != "" and not in_single_line_comment and not in_multi_line_comment:
                 if not re.findall("\D", word):
                     tokenList.append(Token(Constant.INT, int(word), line+1, offset-len(word), word))
-                elif word.startswith("\"") and not string_open:
+                elif word.startswith("\"") and len(word) > 1 and not string_open:
                     word = list(word)
                     word[len(word)-1] = ""
                     word[0] = ""
@@ -82,11 +82,11 @@ class Lexer:
                     if tokenType:
                         tokenList.append(Token(tokenType, tokenValue, line+1, offset-len(word), word))
                     else:
-                        Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected an keyword!" % (word, line+1, offset-len(word)), True)
+                        Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   '%s' at lwine %s and cwolumn %s\n   Expected an keyword!" % (word, line+1, offset-len(word)), True)
 
             if len(self.source) > index and self.source[index] == "\n":
                 if string_open:
-                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   \"%s\" at lwine %s and cwolumn %s\n   Expected a closing '\"'" % (word.replace("\"", ""), line, offset), True)
+                    Logger.fatal_error("A swyntax ewwor haw bween dwetected!\n   '%s' at lwine %s and cwolumn %s\n   Expected a closing '\"'" % (word.replace("\"", ""), line, offset), True)
                 line += 1
                 offset = 0
                 in_single_line_comment = False
