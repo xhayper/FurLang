@@ -7,7 +7,8 @@ using namespace std;
 class Lexer
 {
 public:
-    void scan(char *line, Token *& out);
+    void scan(char *line, Token *out[]);
+
 private:
     bool isIdentifier();
     bool isKeyword();

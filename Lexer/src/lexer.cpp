@@ -2,8 +2,8 @@
 
 using namespace std;
 
-void Lexer::scan(char line[], Token *& out)
+void Lexer::scan(char line[], Token *out[])
 {
-    Token* tokenList = {};
-    out = tokenList;
+    Token tokenList[] = {Token(TokenType::COMMENT, line)};
+    *out = tokenList;
 };

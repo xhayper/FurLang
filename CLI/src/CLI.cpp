@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
     Lexer lexer = Lexer();
     while (getline(file, line))
     {
-        Token* currentToken = NULL;
+        Token *currentToken[] = {};
         lexer.scan((char*) line.c_str(), currentToken);
-        cout << currentToken->type << endl;
+        cout << currentToken[0]->type << endl;
     }
     file.close();
     return 0;
