@@ -1,8 +1,11 @@
 # Folder
 */**/__pycache__/
+CMakeFiles/
 .vscode/
+build/
+out/
 
 # File
-output.asm
-output.o
-output
+cmake_install.cmake
+CMakeCache.txt
+Makefile
