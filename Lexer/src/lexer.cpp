@@ -1,16 +1,9 @@
-#include <map>
 #include "lexer.hpp"
 
 using namespace std;
 
-Lexer::Lexer() {};
-
-void Lexer::addScanner(TokenType tokenType, Scanner scanner)
+void Lexer::scan(char line[], Token *& out)
 {
-    this->scannerMap.insert_or_assign(tokenType, scanner);
-};
-
-Token *Lexer::scan(char *line)
-{
-    return new Token(TokenType::COMMENT, line);
+    Token* tokenList = {};
+    out = tokenList;
 };

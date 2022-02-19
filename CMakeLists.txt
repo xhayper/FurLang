@@ -6,6 +6,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out/bin)
 
+# FILE(GLOB LEXER_LIBRARIES ${CMAKE_BINARY_DIR}/Lexer/*.cpp)
+# include_directories(include ${LEXER_LIBRARIES})
+# link_directories(lib ${CMAKE_BINARY_DIR}/out/lib)
+
 include_directories(.)
 link_directories(.)
 

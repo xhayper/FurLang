@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.22.2)
 project(CLI)
 
 file(GLOB CPP_FILES src/*.cpp src/*.c)

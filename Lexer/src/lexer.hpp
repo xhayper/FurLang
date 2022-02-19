@@ -1,21 +1,19 @@
-#ifndef LEXER_H
 #include <map>
 #include "token.hpp"
+#ifndef LEXER_H
 
 using namespace std;
-
-typedef bool Scanner(char *line, char *word);
 
 class Lexer
 {
 public:
-    Lexer();
-
-    void addScanner(TokenType tokenType, Scanner scanner);
-
-    Token *scan(char *line);
-
+    void scan(char *line, Token *& out);
 private:
-    map<TokenType, Scanner *> scannerMap;
+    bool isIdentifier();
+    bool isKeyword();
+    bool isSeperator();
+    bool isOperator();
+    bool isLiteral();
+    bool isComment();
 };
 #endif
