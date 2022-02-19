@@ -1,7 +1,6 @@
 #ifndef TOKEN_H
-#define TOKEN_H
-
-enum TokenType {
+enum TokenType
+{
     IDENTIFIER,
     KEYWORD,
     SEPERATOR,
@@ -10,11 +9,11 @@ enum TokenType {
     COMMENT
 };
 
-class Token {
-    public:
-        Token(TokenType type, char* value);
-        TokenType type;
-        char* value;
+class Token
+{
+public:
+    Token(TokenType type, char *value);
+    TokenType type;
+    char *value;
 };
-
 #endif

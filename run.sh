@@ -1,3 +1,3 @@
 #!/bin/sh
-chmod +x out/bin/FurLang
-out/bin/FurLang "$@"
+chmod +x out/bin/CLI
+out/bin/CLI "$@"
