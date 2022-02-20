@@ -1,22 +1,26 @@
+#include <Lexer/src/lexer.hpp>
+
 #include <iostream>
 #include <fstream>
-#include <string>
-#include <Lexer/src/lexer.hpp>
+#include <string.h>
+#include <sstream>
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-    ifstream file;
-    file.open(argv[1]);
-    string line;
+    ifstream t(argv[1]);
+    stringstream buffer;
+    buffer << t.rdbuf();
+
+    string source = buffer.str();
+    char charArray[source.length() + 1];
+
+    strcpy(charArray, source.c_str());
+
     Lexer lexer = Lexer();
-    while (getline(file, line))
-    {
-        Token *currentToken[] = {};
-        lexer.scan((char*) line.c_str(), currentToken);
-        cout << currentToken[0]->type << endl;
-    }
-    file.close();
+
+    Token *currentTokenList[] = {};
+    lexer.scan(source, currentTokenList);
     return 0;
 }
