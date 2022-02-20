@@ -1,2 +1,6 @@
-1
-~blep~
+~blep~ One line comment
+~owo~ Multiline comment ~uwu~
+
+if [ You == "Cute" ] { ~blep~ `then` is optional
+  bark "UwU" ~blep~ Return "UwU"
+}

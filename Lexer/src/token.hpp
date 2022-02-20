@@ -8,7 +8,8 @@ enum TokenType
     SEPERATOR,
     OPERATOR,
     LITERAL,
-    COMMENT
+    COMMENT,
+    UNKNOWN,
 };
 
 class Token

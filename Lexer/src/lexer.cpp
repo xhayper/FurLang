@@ -14,7 +14,7 @@ TokenType Lexer::getTokenType(string word)
         return TokenType::LITERAL;
     if (this->isComment(word))
         return TokenType::COMMENT;
-    throw invalid_argument("Invalid token caught!");
+    return TokenType::UNKNOWN;
 }
 
 void Lexer::scan(string source, vector<Token> &out)
@@ -36,6 +36,7 @@ void Lexer::scan(string source, vector<Token> &out)
             tempWordList.push_back(charArray[index++]);
         }
         tempWordList.push_back('\0');
+        cout << tempWordList.data();
         word = string(tempWordList.data());
         tempWordList.clear();
 
@@ -56,6 +57,12 @@ bool stringStartsWith(string in, string find)
     return in.substr(0, find.size()) == find;
 }
 
+bool stringEndsWith(string in, string find)
+{
+    if (find.size() > in.size()) return false;
+    return in.substr(in.size()-find.size(), find.size()) == find;
+}
+
 bool Lexer::isIdentifier(string word)
 {
     return false;
@@ -68,21 +75,28 @@ bool Lexer::isKeyword(string word)
 
 bool Lexer::isSeperator(string word)
 {
-    return false;
+    return regex_match(word, regex("[\\[\\]{}]+"));
 }
 
 bool Lexer::isOperator(string word)
 {
+    if (regex_match(word, regex("[+/\\-*%]"))) return true; // Math operator
+    if (regex_match(word, regex("="))) return true; // Assignment operator
+    if (regex_match(word, regex("([!><=]=|[><])"))) return true; // Relational operator
+    if (regex_match(word, regex("((&&)|(\\|\\|))"))) return true; // Logical operator
     return false;
 }
 
 bool Lexer::isLiteral(string word)
 {
-    return regex_match(word, regex("\\d")) >= 1;
+    if (regex_match(word, regex("^\"([^\"]|(\\\"))*\"$"))) return true; // Check for string
+    if (regex_match(word, regex("\\d")) >= 1) return true; // Check for number
+    return false;
 }
 
 bool Lexer::isComment(string word)
 {
-    cout << word << endl;
-    return stringStartsWith(string(word), "~blep~");
+    if (regex_match(word, regex("^(~blep~)[\\s\\S]*"))) return true; // Single line comment
+    if (regex_match(word, regex("^()"))) return true; // Multiline comment
+    return false;
 }
