@@ -15,12 +15,12 @@ public:
     void scan(string line, vector<Token> &out);
 
 private:
-    bool isIdentifier(char word[]);
-    bool isKeyword(char word[]);
-    bool isSeperator(char word[]);
-    bool isOperator(char word[]);
-    bool isLiteral(char word[]);
-    bool isComment(char word[]);
-    TokenType getTokenType(char word[]);
+    bool isIdentifier(string word);
+    bool isKeyword(string word);
+    bool isSeperator(string word);
+    bool isOperator(string word);
+    bool isLiteral(string word);
+    bool isComment(string word);
+    TokenType getTokenType(string word);
 };
 #endif

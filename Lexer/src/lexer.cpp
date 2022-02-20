@@ -1,6 +1,6 @@
 #include "lexer.hpp"
 
-TokenType Lexer::getTokenType(char word[])
+TokenType Lexer::getTokenType(string word)
 {
     if (this->isIdentifier(word))
         return TokenType::IDENTIFIER;
@@ -23,6 +23,7 @@ void Lexer::scan(string source, vector<Token> &out)
     strcpy(charArray, source.c_str());
     vector<Token> tokenVector;
     string word;
+    int line = 1;
     int index = 0;
     int wordIndex = 0;
     while (1)
@@ -36,12 +37,13 @@ void Lexer::scan(string source, vector<Token> &out)
         }
         tempWordList.push_back('\0');
         word = string(tempWordList.data());
-        char wordChar[word.length()+1];
-        strcpy(wordChar, word.c_str());
+        tempWordList.clear();
 
-        TokenType tokenType = this->getTokenType(wordChar);
+        TokenType tokenType = this->getTokenType(word);
         tokenVector.push_back(Token(tokenType, word));
 
+        if (charArray[index] == '\n')
+            line++;
         word = "";
         wordIndex = 0;
         index++;
@@ -49,34 +51,38 @@ void Lexer::scan(string source, vector<Token> &out)
     out = tokenVector;
 };
 
-// Tester
+bool stringStartsWith(string in, string find)
+{
+    return in.substr(0, find.size()) == find;
+}
 
-bool Lexer::isIdentifier(char word[])
+bool Lexer::isIdentifier(string word)
 {
     return false;
 }
 
-bool Lexer::isKeyword(char word[])
+bool Lexer::isKeyword(string word)
 {
     return false;
 }
 
-bool Lexer::isSeperator(char word[])
+bool Lexer::isSeperator(string word)
 {
     return false;
 }
 
-bool Lexer::isOperator(char word[])
+bool Lexer::isOperator(string word)
 {
     return false;
 }
 
-bool Lexer::isLiteral(char word[])
+bool Lexer::isLiteral(string word)
 {
     return regex_match(word, regex("\\d")) >= 1;
 }
 
-bool Lexer::isComment(char word[])
+bool Lexer::isComment(string word)
 {
-    return false;
+    cout << word << endl;
+    return stringStartsWith(string(word), "~blep~");
 }

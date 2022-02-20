@@ -22,6 +22,8 @@ int main(int argc, char *argv[])
 
     vector<Token> tokenList;
     lexer.scan(source, tokenList);
-    cout << tokenList[0].value << endl;
+    for (int i = 0; i < tokenList.size(); i++) {
+        cout << "< Type: " << tokenList.at(i).type << ", Value: " << tokenList.at(i).value << " >" << endl;
+    }
     return 0;
 }
