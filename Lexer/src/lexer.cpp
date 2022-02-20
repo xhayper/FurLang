@@ -1,8 +1,4 @@
 #include "lexer.hpp"
-#include "iostream"
-#include "cstring"
-
-using namespace std;
 
 TokenType Lexer::getTokenType(char word[])
 {
@@ -21,31 +17,36 @@ TokenType Lexer::getTokenType(char word[])
     throw invalid_argument("Invalid token caught!");
 }
 
-void Lexer::scan(string line, Token *out[])
+void Lexer::scan(string source, vector<Token> &out)
 {
-    char charArray[line.length() + 1];
-    strcpy(charArray, line.c_str());
-    Token tokenList[] = {};
-    char word[256];
+    char charArray[source.length() + 1];
+    strcpy(charArray, source.c_str());
+    vector<Token> tokenVector;
+    string word;
     int index = 0;
     int wordIndex = 0;
     while (1)
     {
         if (index >= sizeof(charArray))
             break;
+        vector<char> tempWordList;
         while (charArray[index] != '\n' && charArray[index] != ' ' && charArray[index] != '\0')
         {
-            word[wordIndex++] = charArray[index++];
+            tempWordList.push_back(charArray[index++]);
         }
-        word[wordIndex] = '\0';
-        // Start
-        TokenType tokenType = this->getTokenType(word);
-        // End
-        *word = {};
+        tempWordList.push_back('\0');
+        word = string(tempWordList.data());
+        char wordChar[word.length()+1];
+        strcpy(wordChar, word.c_str());
+
+        TokenType tokenType = this->getTokenType(wordChar);
+        tokenVector.push_back(Token(tokenType, word));
+
+        word = "";
         wordIndex = 0;
         index++;
     }
-    *out = tokenList;
+    out = tokenVector;
 };
 
 // Tester
@@ -72,7 +73,7 @@ bool Lexer::isOperator(char word[])
 
 bool Lexer::isLiteral(char word[])
 {
-    return false;
+    return regex_match(word, regex("\\d")) >= 1;
 }
 
 bool Lexer::isComment(char word[])

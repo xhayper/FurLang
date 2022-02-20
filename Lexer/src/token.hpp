@@ -1,4 +1,6 @@
+#include "string"
 #ifndef TOKEN_H
+
 enum TokenType
 {
     IDENTIFIER,
@@ -12,8 +14,8 @@ enum TokenType
 class Token
 {
 public:
-    Token(TokenType type, char *value);
+    Token(TokenType type, std::string value);
     TokenType type;
-    char *value;
+    std::string value;
 };
 #endif

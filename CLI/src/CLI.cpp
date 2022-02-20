@@ -1,9 +1,9 @@
 #include <Lexer/src/lexer.hpp>
 
-#include <iostream>
-#include <fstream>
-#include <string.h>
-#include <sstream>
+#include "iostream"
+#include "fstream"
+#include "cstring"
+#include "sstream"
 
 using namespace std;
 
@@ -20,7 +20,8 @@ int main(int argc, char *argv[])
 
     Lexer lexer = Lexer();
 
-    Token *currentTokenList[] = {};
-    lexer.scan(source, currentTokenList);
+    vector<Token> tokenList;
+    lexer.scan(source, tokenList);
+    cout << tokenList[0].value << endl;
     return 0;
 }

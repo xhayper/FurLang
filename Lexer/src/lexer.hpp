@@ -1,5 +1,9 @@
-#include <map>
+#include "map"
 #include "string"
+#include "cstring"
+#include "iostream"
+#include "regex"
+
 #include "token.hpp"
 #ifndef LEXER_H
 
@@ -8,7 +12,7 @@ using namespace std;
 class Lexer
 {
 public:
-    void scan(string line, Token *out[]);
+    void scan(string line, vector<Token> &out);
 
 private:
     bool isIdentifier(char word[]);
