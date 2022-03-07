@@ -44,11 +44,10 @@ void Lexer::scan(string source, vector<Token> &out)
 
     bool inSingleLineComment = false;
     bool inMultiLineComment = false;
-    while (1)
+    while (index >= sizeof(charArray))
     {
-        if (index >= sizeof(charArray))
-            break;
         vector<char> tempWordList;
+        
         while (charArray[index] != '\n' && charArray[index] != ' ' && charArray[index] != '\0')
             tempWordList.push_back(charArray[index++]);
         tempWordList.push_back('\0');
