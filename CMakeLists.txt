@@ -7,5 +7,5 @@ set(SOURCE_DIRECTORY src)
 include_directories(include/)
 link_directories(lib/)
 
-add_subdirectory(Lexer)
+add_subdirectory(Parser)
 add_subdirectory(CLI)

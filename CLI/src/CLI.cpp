@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     buffer << t.rdbuf();
 
     string source = buffer.str();
-    Lexer lexer = Lexer();
+    Parser lexer = Parser();
 
     vector<Token> tokenList;
     lexer.scan(source, tokenList);
