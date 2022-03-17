@@ -36,7 +36,6 @@ void Lexer::scan(string source, vector<Token> &out)
 {
     char *charArray = new char[source.length() + 1];
     strcpy(charArray, source.c_str());
-    cout << charArray << endl;
     vector<Token> tokenVector;
     string word;
     int line = 1;

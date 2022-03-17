@@ -1,3 +1,5 @@
+#pragma once
+
 #include "map"
 #include "string"
 #include "cstring"
@@ -5,7 +7,6 @@
 #include "regex"
 
 #include "token.hpp"
-#ifndef LEXER_H
 
 using namespace std;
 
@@ -23,4 +24,3 @@ private:
     bool isComment(string word);
     TokenType getTokenType(string word);
 };
-#endif

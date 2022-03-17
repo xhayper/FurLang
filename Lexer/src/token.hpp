@@ -1,5 +1,6 @@
+#pragma once
+
 #include "string"
-#ifndef TOKEN_H
 
 enum TokenType
 {
@@ -19,4 +20,3 @@ public:
     TokenType type;
     std::string value;
 };
-#endif

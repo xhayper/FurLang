@@ -1,9 +1,4 @@
-#include "lexer.hpp"
-
-#include "iostream"
-#include "fstream"
-#include "cstring"
-#include "sstream"
+#include "CLI.hpp"
 
 using namespace std;
 
