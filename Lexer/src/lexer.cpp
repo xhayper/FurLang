@@ -34,8 +34,9 @@ bool isCommentEnd(string word)
 
 void Lexer::scan(string source, vector<Token> &out)
 {
-    char charArray[source.length() + 1];
+    char *charArray = new char[source.length() + 1];
     strcpy(charArray, source.c_str());
+    cout << charArray << endl;
     vector<Token> tokenVector;
     string word;
     int line = 1;
@@ -44,11 +45,10 @@ void Lexer::scan(string source, vector<Token> &out)
 
     bool inSingleLineComment = false;
     bool inMultiLineComment = false;
-    while (1)
+    while (strlen(charArray) > index)
     {
-        if (index >= sizeof(charArray))
-            break;
         vector<char> tempWordList;
+
         while (charArray[index] != '\n' && charArray[index] != ' ' && charArray[index] != '\0')
             tempWordList.push_back(charArray[index++]);
         tempWordList.push_back('\0');
@@ -57,7 +57,6 @@ void Lexer::scan(string source, vector<Token> &out)
 
         if (word != "")
         {
-
             TokenType tokenType = this->getTokenType(word);
             tokenVector.push_back(Token(inSingleLineComment == true || inMultiLineComment == true ? COMMENT : tokenType, word));
 
@@ -82,6 +81,7 @@ void Lexer::scan(string source, vector<Token> &out)
         index++;
     }
     out = tokenVector;
+    delete[] charArray;
 };
 
 bool Lexer::isIdentifier(string word)
@@ -116,7 +116,7 @@ bool Lexer::isLiteral(string word)
 {
     if (regex_match(word, regex("^\"([^\"]|(\\\"))*\"$")))
         return true; // Check for string
-    if (regex_match(word, regex("\\d")) >= 1)
+    if (regex_match(word, regex("\\d")))
         return true; // Check for number
     return false;
 }

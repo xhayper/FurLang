@@ -1,7 +1,8 @@
-cmake_minimum_required(VERSION 3.22.2)
 project(Lexer)
 
-file(GLOB CPP_FILES src/*.cpp src/*.c)
-file(GLOB HEADER_FILES src/*.hpp src/*.h)
+file(GLOB CPP_FILES ${SOURCE_DIRECTORY}/*.cpp ${SOURCE_DIRECTORY}/*.c)
+file(GLOB HEADER_FILES ${SOURCE_DIRECTORY}/*.hpp ${SOURCE_DIRECTORY}/*.h)
 
-add_library(${PROJECT_NAME} SHARED ${CPP_FILES} ${HEADER_FILES})
+add_library(${PROJECT_NAME} STATIC ${CPP_FILES} ${HEADER_FILES})
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${SOURCE_DIRECTORY}/)
